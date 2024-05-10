@@ -53,7 +53,16 @@ namespace proiect_ciceu
         }
         public string GbpConve()
         {
-            return Convert.ToString((int)(x / 5.4 * 100) / 100.0);
+            string info = new WebClient().DownloadString("https://free.currconv.com/api/v7/convert?q=GBP_RON&compact=ultra&apiKey=02109d5b9f21cf341d8b");
+            JsonValue jsonValue = System.Json.JsonValue.Parse(info);
+            float e = 0;
+            if (jsonValue.ContainsKey("GBP_RON"))
+
+            {
+                e = jsonValue["GBP_RON"];
+                return Convert.ToString((int)(x / e * 100) / 100.0);
+            }
+            else return "valuta inexistenta";
         }
 
        

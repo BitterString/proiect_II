@@ -48,7 +48,7 @@ namespace proiect_ciceu
                 e = jsonValue["USD_RON"];
                 return Convert.ToString((int)(x / e * 100) / 100.0);
             }
-            else return "valuta inex";
+            else return "valuta inexistenta";
 
         }
         public string GbpConve()

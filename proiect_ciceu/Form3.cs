@@ -17,7 +17,7 @@ namespace proiect_ciceu
             InitializeComponent();
             textBox2.PasswordChar = '•';
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-7U2ECFL;Initial Catalog=BankApp;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
         private void button1_Click(object sender, EventArgs e)
         {
             String username, password;

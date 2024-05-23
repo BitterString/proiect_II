@@ -64,10 +64,21 @@ namespace proiect_ciceu
         {
            
         }
-
+        Form1 simulatorCredit = new Form1();
         private void button1_Click(object sender, EventArgs e)
         {
-            textBox1.Text = Convert.ToString(Form3.Salveaza.ClientId);
+           
+            simulatorCredit.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            simulatorCredit.Show();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -12,12 +12,17 @@ namespace proiect_ciceu
 {
     public partial class Form3 : Form
     {
+        public static class Salveaza
+        {
+            public static int ClientId { get; set; }
+        }
         public Form3()
         {
             InitializeComponent();
             textBox2.PasswordChar = '•';
+
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True;");
         private void button1_Click(object sender, EventArgs e)
         {
             String username, password;
@@ -45,8 +50,13 @@ namespace proiect_ciceu
 
                 // Check Client Credentials
                 if (IsValidUser("Client", username, password))
-                {
+                {     Salveaza.ClientId =GetClientId( username, password);
+
                     // aici va veni implementat formul pentru Cont
+                    Form6 clientForm = new Form6();
+
+                    clientForm.Show();
+                    this.Hide(); // Optionally hide the current form
                     return;
                 }
 
@@ -81,9 +91,41 @@ namespace proiect_ciceu
 
                     return dt.Rows.Count > 0;
                 }
+
+
+            }
+        }
+        private int GetClientId(string username, string password)
+        {
+            string query = "SELECT ClientID FROM Client WHERE Username = @username AND Password = @password";
+            using (SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True;Connect Timeout=30"))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", password);
+
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Read the ClientID directly from the first (and only) row
+                            return Convert.ToInt32(reader["ClientID"]);
+                        }
+                        else
+                        {
+                            // No rows found
+                            return -1;
+                        }
+                    }
+                }
             }
         }
 
-       
+
+
+
+
     }
 }

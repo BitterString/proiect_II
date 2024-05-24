@@ -22,14 +22,11 @@ namespace proiect_ciceu
         {
             try
             {
-                // Open the connection
                 conn.Open();
-
-                // Get the ClientID from the static property in Form3
                 int clientId = Form3.Salveaza.ClientId;
 
                 // Define the SQL query to fetch data from the Credit table for the specific client
-                string query = "SELECT * FROM Credit WHERE ClientID = @clientId";
+                string query = "SELECT * FROM Tranzactie WHERE ClientID = @clientId";
 
                 // Create a SqlCommand with the query and connection
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -56,6 +53,46 @@ namespace proiect_ciceu
                 // Close the connection
                 conn.Close();
             }
+            try
+            {
+                // Open the connection
+                conn.Open();
+
+                // Get the ClientID from the static property in Form3
+                int clientId = Form3.Salveaza.ClientId;
+
+                // Define the SQL query
+                string query = "SELECT T.[TranzactieID], T.[FromContID], T.[ToContID], T.[Tip], T.[Suma], T.[Data] " +
+                "FROM Tranzactie T " +
+                "JOIN Cont SenderCont ON T.[FromContID] = SenderCont.[ContID] " +
+                "WHERE SenderCont.[ClientID] = @clientId;";
+
+                // Create a SqlCommand with the query and connection
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    // Add the clientId parameter to the SqlCommand
+                    cmd.Parameters.AddWithValue("@clientID", clientId);
+
+                    // Create a SqlDataAdapter to execute the query and fill a DataTable
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    // Bind the DataTable to the DataGridView
+                    dataGridView1.DataSource = dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during data retrieval
+                MessageBox.Show($"Error fetching data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Close the connection
+                conn.Close();
+            }
+
         }
 
         SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True;Connect Timeout=30");
@@ -64,21 +101,28 @@ namespace proiect_ciceu
         {
            
         }
-        Form1 simulatorCredit = new Form1();
+        
         private void button1_Click(object sender, EventArgs e)
         {
-           
+            Form1 simulatorCredit = new Form1();
             simulatorCredit.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            simulatorCredit.Show();
+            Form1 convertor = new Form1();
+            convertor.Show();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form7 form = new Form7();
+            form.Show();
         }
     }
 }

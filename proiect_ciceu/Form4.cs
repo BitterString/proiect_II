@@ -17,7 +17,7 @@ namespace proiect_ciceu
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
 
         private void Form4_Load(object sender, EventArgs e)
         {
@@ -34,17 +34,28 @@ namespace proiect_ciceu
         }
 
         private void textBox1_Leave(object sender, EventArgs e)
-        {if (textBox1.Text == "")
-            {
-                textBox1.Text = "Nume";
+        {   if (textBox1.Text == "")
+                {
+                    textBox1.Text = "Nume";
 
-                textBox1.ForeColor = Color.Silver;
-            }
+                    textBox1.ForeColor = Color.Silver;
+                }
 
-            }
+         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Validate input fields
+            if (string.IsNullOrWhiteSpace(textBox1.Text) ||
+                string.IsNullOrWhiteSpace(textBox3.Text) ||
+                string.IsNullOrWhiteSpace(textBox2.Text) ||
+                string.IsNullOrWhiteSpace(textBox4.Text) ||
+                string.IsNullOrWhiteSpace(textBox5.Text) ||
+                string.IsNullOrWhiteSpace(textBox6.Text))
+            {
+                MessageBox.Show("All fields must be filled!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 conn.Open();
@@ -66,6 +77,10 @@ namespace proiect_ciceu
                 Form2 form = new Form2();
                 form.Show();
                 this.Hide(); // Optionally hide the current form after registration
+            }
+            catch(SqlException ex) when(ex.Number == 2627 || ex.Number == 2601)
+            {
+                MessageBox.Show("Could not register: this username is already in use.Please choose another one!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {

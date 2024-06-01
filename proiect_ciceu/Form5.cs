@@ -115,9 +115,86 @@ namespace proiect_ciceu
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
+            try
+            {
+                conn.Open();
 
+                // Define the SQL query to fetch data from the Programare table
+                string query = "SELECT * FROM Programare";
+
+                // Create a SqlDataAdapter to execute the query and fill a DataTable
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                DataTable dtProgramare = new DataTable();
+                adapter.Fill(dtProgramare);
+
+                // Bind the DataTable to the DataGridView
+                dataGridView2.DataSource = dtProgramare;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error fetching data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+       
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    conn.Open();
+
+                    foreach (DataGridViewRow row in dataGridView2.SelectedRows)
+                    {
+                        // Assuming the primary key column in your Programare table is named "ProgramareID"
+                        int programareId = Convert.ToInt32(row.Cells["ProgramareID"].Value);
+                        DateTime programareData = Convert.ToDateTime(row.Cells["Data"].Value);
+
+                        // Check if the programare date has passed
+                        if (programareData < DateTime.Now)
+                        {
+                            // Define the SQL query to delete the record from the Programare table
+                            string deleteQuery = "DELETE FROM Programare WHERE ProgramareID = @ProgramareID";
+
+                            using (SqlCommand cmd = new SqlCommand(deleteQuery, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@ProgramareID", programareId);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // Remove the row from the DataGridView
+                            dataGridView2.Rows.Remove(row);
+                            MessageBox.Show("Programare ștearsă cu succes.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nu puteți șterge o programare care nu a avut loc încă.", "Informație", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Eroare la ștergerea datelor: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vă rugăm să selectați cel puțin un rând pentru a șterge.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

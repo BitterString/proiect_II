@@ -162,6 +162,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form5";
             this.Text = "Portal admin";
+            this.Load += new System.EventHandler(this.Form5_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

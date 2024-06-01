@@ -22,7 +22,7 @@ namespace proiect_ciceu
             textBox2.PasswordChar = '•';
 
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True");
         private void button1_Click(object sender, EventArgs e)
         {
             String username, password;
@@ -98,7 +98,7 @@ namespace proiect_ciceu
         private int GetClientId(string username, string password)
         {
             string query = "SELECT ClientID FROM Client WHERE Username = @username AND Password = @password";
-            using (SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True"))
+            using (SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True"))
             {
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -123,9 +123,9 @@ namespace proiect_ciceu
             }
         }
 
+        private void Form3_Load(object sender, EventArgs e)
+        {
 
-
-
-
+        }
     }
 }

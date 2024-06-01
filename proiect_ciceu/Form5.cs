@@ -17,7 +17,7 @@ namespace proiect_ciceu
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True");
         DataTable dt = new DataTable();
         private void button1_Click(object sender, EventArgs e)
         {
@@ -195,6 +195,11 @@ namespace proiect_ciceu
             {
                 MessageBox.Show("Vă rugăm să selectați cel puțin un rând pentru a șterge.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void Form5_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

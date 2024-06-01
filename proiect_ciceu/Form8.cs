@@ -28,7 +28,7 @@ namespace proiect_ciceu
 
 
 
-            SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True");
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
 
             try
             {
@@ -143,10 +143,10 @@ namespace proiect_ciceu
                     }
                 }
                 string insertQuery = @"
-            INSERT INTO Programare (ClientID,Numar, DataInregistrare, Data) 
-            OUTPUT inserted.Numar
-            VALUES (@clientId, @Numar, @dataInregistrare, @data)
-        ";
+                INSERT INTO Programare (ClientID,Numar, DataInregistrare, Data) 
+                OUTPUT inserted.Numar
+                VALUES (@clientId, @Numar, @dataInregistrare, @data)
+                 ";
 
 
                 using (SqlCommand cmd = new SqlCommand(insertQuery, conn))

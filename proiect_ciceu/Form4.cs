@@ -17,7 +17,7 @@ namespace proiect_ciceu
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
 
         private void Form4_Load(object sender, EventArgs e)
         {
@@ -29,7 +29,8 @@ namespace proiect_ciceu
             if (textBox1.Text == "Nume")
             {
                 textBox1.Text = "";
-                textBox1.ForeColor= Color.Black;           }
+                textBox1.ForeColor= Color.Black; 
+            }
 
         }
 

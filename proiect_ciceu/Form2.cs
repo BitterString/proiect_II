@@ -31,6 +31,9 @@ namespace proiect_ciceu
             frm.Show();
         }
 
-      
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

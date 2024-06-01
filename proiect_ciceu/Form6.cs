@@ -94,21 +94,19 @@ namespace proiect_ciceu
                 conn.Open();
                 int clientId = Form3.Salveaza.ClientId;
 
-                string queryBalance = "SELECT SUM(Suma) FROM Cont WHERE ClientID = @clientId";
+                // Define the SQL query to fetch all values for the specific client
+                string queryClientValues = "SELECT * FROM Cont WHERE ClientID = @clientId";
 
-                using (SqlCommand cmd = new SqlCommand(queryBalance, conn))
+                using (SqlCommand cmd = new SqlCommand(queryClientValues, conn))
                 {
                     cmd.Parameters.AddWithValue("@clientId", clientId);
-                    object result = cmd.ExecuteScalar();
-                    if (result != null && result != DBNull.Value)
-                    {
-                        decimal balance = Convert.ToDecimal(result);
-                        labelSold.Text = $"Sold: {balance:F2}"; // Format with two decimal
-                    }
-                    else
-                    {
-                        labelSold.Text = "Sold: 0";
-                    }
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+
+                    // Bind the DataTable to the DataGridView
+                    dataGridView3.DataSource = dt;
                 }
             }
             catch (Exception ex)
@@ -123,7 +121,7 @@ namespace proiect_ciceu
 
 
 
-        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True");
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

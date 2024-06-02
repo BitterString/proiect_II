@@ -22,7 +22,7 @@ namespace proiect_ciceu
             textBox2.PasswordChar = '•';
 
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True;");
+        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-0LALPAV\SQLEXPRESS;Initial Catalog=BankApp;persist security info=True;Integrated Security=SSPI;");
         private void button1_Click(object sender, EventArgs e)
         {
             String username, password;
@@ -50,7 +50,8 @@ namespace proiect_ciceu
 
                 // Check Client Credentials
                 if (IsValidUser("Client", username, password))
-                {     Salveaza.ClientId =GetClientId( username, password);
+                { 
+                    Salveaza.ClientId =GetClientId( username, password);
 
                     // aici va veni implementat formul pentru Cont
                     Form6 clientForm = new Form6();
@@ -98,7 +99,7 @@ namespace proiect_ciceu
         private int GetClientId(string username, string password)
         {
             string query = "SELECT ClientID FROM Client WHERE Username = @username AND Password = @password";
-            using (SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True;Connect Timeout=30"))
+            using (SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-0LALPAV\SQLEXPRESS;Initial Catalog=BankApp;persist security info=True;Integrated Security=SSPI;"))
             {
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -123,9 +124,9 @@ namespace proiect_ciceu
             }
         }
 
+        private void Form3_Load(object sender, EventArgs e)
+        {
 
-
-
-
+        }
     }
 }

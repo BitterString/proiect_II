@@ -17,7 +17,8 @@ namespace proiect_ciceu
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True;Connect Timeout=30");
+        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-0LALPAV\SQLEXPRESS;Initial Catalog=BankApp;persist security info=True;Integrated Security=SSPI;");
+
         DataTable dt = new DataTable();
         private void button1_Click(object sender, EventArgs e)
         {
@@ -116,6 +117,11 @@ namespace proiect_ciceu
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Form5_Load(object sender, EventArgs e)
         {
 
         }

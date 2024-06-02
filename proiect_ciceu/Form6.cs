@@ -92,7 +92,7 @@ namespace proiect_ciceu
 
         }
 
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ciceu\Documents\VS_projects\ProiectII_repo\BankApp.mdf;Integrated Security=True;Connect Timeout=30");
+        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-0LALPAV\SQLEXPRESS;Initial Catalog=BankApp;persist security info=True;Integrated Security=SSPI;");
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -127,14 +127,22 @@ namespace proiect_ciceu
             form.Show();
         }
 
+
         private void button4_Click(object sender, EventArgs e)
         {
-
+            Form9 form = new Form9();
+            form.Show();
+            this.Hide();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

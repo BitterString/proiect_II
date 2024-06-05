@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace proiect_ciceu
@@ -25,11 +19,7 @@ namespace proiect_ciceu
             // Add event handler for ValueChanged
             dateTimePicker1.ValueChanged += DateTimePicker1_ValueChanged;
 
-
-
-
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
-
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-0LALPAV\SQLEXPRESS;Initial Catalog=BankApp;persist security info=True;Integrated Security=SSPI;");
             try
             {
                 // Open the connection
@@ -56,7 +46,6 @@ namespace proiect_ciceu
                     }
                 }
             }
-
             catch (Exception ex)
             {
                 // Handle any exceptions that occur during data retrieval
@@ -68,6 +57,7 @@ namespace proiect_ciceu
                 conn.Close();
             }
         }
+
         private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             DateTime selectedDateTime = dateTimePicker1.Value;
@@ -85,10 +75,11 @@ namespace proiect_ciceu
             {
                 minute = 0;
                 hour += 1;
-
             }
-            else minute = 30;
-
+            else
+            {
+                minute = 30;
+            }
 
             if (hour < 8)
             {
@@ -107,8 +98,7 @@ namespace proiect_ciceu
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
-
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-0LALPAV\SQLEXPRESS;Initial Catalog=BankApp;persist security info=True;Integrated Security=SSPI;");
             try
             {
                 // Open the connection
@@ -123,31 +113,36 @@ namespace proiect_ciceu
                 // Use the selected date and time from dateTimePicker1 for Data
                 DateTime data = dateTimePicker1.Value;
 
+                // Check if the selected date is in the past
+                if (data < DateTime.Now)
+                {
+                    MessageBox.Show("Vă rugăm să alegeți o dată validă", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 Random random = new Random();
                 int numar = random.Next();
-
 
                 string check = "SELECT COUNT(*) FROM Programare WHERE Data = @data";
 
                 using (SqlCommand checkCmd = new SqlCommand(check, conn))
                 {
-
                     checkCmd.Parameters.AddWithValue("@data", data);
 
                     int programariCount = (int)checkCmd.ExecuteScalar();
 
                     if (programariCount > 0)
                     {
-                        MessageBox.Show("Ocupat! Alege alta data.", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Această dată este ocupată. Vă rugăm să alegeți una disponibilă", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
+
                 string insertQuery = @"
-                INSERT INTO Programare (ClientID,Numar, DataInregistrare, Data) 
+                INSERT INTO Programare (ClientID, Numar, DataInregistrare, Data) 
                 OUTPUT inserted.Numar
                 VALUES (@clientId, @Numar, @dataInregistrare, @data)
-                 ";
-
+                ";
 
                 using (SqlCommand cmd = new SqlCommand(insertQuery, conn))
                 {
@@ -161,7 +156,7 @@ namespace proiect_ciceu
                     string generatedNumar = cmd.ExecuteScalar().ToString();
 
                     // Display the generated Numar in a message box
-                    MessageBox.Show($"Reservation saved successfully. Numar: {generatedNumar}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Rezervarea a fost salvată cu succes. Numar: {generatedNumar}", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
             }

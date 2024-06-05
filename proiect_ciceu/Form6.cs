@@ -121,8 +121,7 @@ namespace proiect_ciceu
 
 
 
-        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
-
+        private SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-0LALPAV\SQLEXPRESS;Initial Catalog=BankApp;persist security info=True;Integrated Security=SSPI;");
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -158,7 +157,9 @@ namespace proiect_ciceu
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            Form9 form = new Form9();
+            form.Show();
+            this.Close();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -174,6 +175,11 @@ namespace proiect_ciceu
         private void button6_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Pentru un credit nou faceți o programare.");
+        }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

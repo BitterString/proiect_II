@@ -17,8 +17,7 @@ namespace proiect_ciceu
         {
             InitializeComponent();
         }
-        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-4E2J2L9;Initial Catalog=BankApp;Integrated Security=True");
-        DataTable dt = new DataTable();
+        private SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-0LALPAV\SQLEXPRESS;Initial Catalog=BankApp;persist security info=True;Integrated Security=SSPI;"); DataTable dt = new DataTable();
         private void button1_Click(object sender, EventArgs e)
         {
             try
